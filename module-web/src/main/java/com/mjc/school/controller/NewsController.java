@@ -12,11 +12,11 @@ public class NewsController {
     private final Service<NewsDtoRequest, NewsDtoResponse> newsService = ServiceFactory.getInstance().getNewsService();
 
     public List<NewsDtoResponse> findAll() {
-        return this.newsService.findAll();
+        return this.newsService.readAll();
     }
 
     public NewsDtoResponse findById(Long newsId) {
-        return (NewsDtoResponse)this.newsService.findById(newsId);
+        return (NewsDtoResponse)this.newsService.readById(newsId);
     }
 
     public NewsDtoResponse create(NewsDtoRequest dtoRequest) {

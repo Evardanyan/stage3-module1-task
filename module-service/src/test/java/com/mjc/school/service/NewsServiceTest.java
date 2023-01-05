@@ -46,7 +46,7 @@ public class NewsServiceTest {
 
         newsService.create(newsDtoRequest);
 
-        Long testResult = newsService.findById(21L).id();
+        Long testResult = newsService.readById(21L).id();
 
         assertEquals(21L, testResult);
 
@@ -85,7 +85,7 @@ public class NewsServiceTest {
         @DisplayName("JUnit test for findAll method")
         @Test
         public void findAll() throws NotFoundException {
-            List<NewsDtoResponse> newsDtoResponseList = newsService.findAll();
+            List<NewsDtoResponse> newsDtoResponseList = newsService.readAll();
 
             assertEquals(newsDtoResponseList.size(), readAll.size());
         }
@@ -95,9 +95,9 @@ public class NewsServiceTest {
         public void findById() throws NotFoundException {
             Long expectedId = 1L;
 
-            NewsDtoResponse expected = newsService.findById(1L);
+            NewsDtoResponse expected = newsService.readById(1L);
 
-            Long testResult = newsService.findById(1L).id();
+            Long testResult = newsService.readById(1L).id();
 
             assertEquals(expectedId, testResult);
 

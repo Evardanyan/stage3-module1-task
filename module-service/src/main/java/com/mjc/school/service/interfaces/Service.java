@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Service<T1, T2> {
 
-    public List<T2> findAll();
+    public List<T2> readAll();
 
-    public T2 findById(Long var1);
+    public T2 readById(Long var1);
 
     public T2 create(T1 var1);
 
