@@ -27,11 +27,11 @@ public class NewsService implements Service<NewsDtoRequest, NewsDtoResponse> {
         this.newsValidator = NewsValidator.getNewsValidator();
     }
 
-    public List<NewsDtoResponse> findAll() {
+    public List<NewsDtoResponse> readAll() {
         return (List<NewsDtoResponse>)this.mapper.modelListToDtoList(this.newsRepository.readAll());
     }
 
-    public NewsDtoResponse findById(Long newsId) {
+    public NewsDtoResponse readById(Long newsId) {
         this.newsValidator.validateNewsId(newsId);
         if (this.newsRepository.isExistById(newsId)) {
             NewsModel newsModel = this.newsRepository.readById(newsId);
