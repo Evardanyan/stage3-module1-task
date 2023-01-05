@@ -28,13 +28,13 @@ public class NewsService implements Service<NewsDtoRequest, NewsDtoResponse> {
     }
 
     public List<NewsDtoResponse> findAll() {
-        return (List<NewsDtoResponse>)this.mapper.modelListToDtoList(this.newsRepository.findAll());
+        return (List<NewsDtoResponse>)this.mapper.modelListToDtoList(this.newsRepository.readAll());
     }
 
     public NewsDtoResponse findById(Long newsId) {
         this.newsValidator.validateNewsId(newsId);
         if (this.newsRepository.isExistById(newsId)) {
-            NewsModel newsModel = this.newsRepository.findById(newsId);
+            NewsModel newsModel = this.newsRepository.readById(newsId);
             return this.mapper.modelToDto(newsModel);
         }
         throw new NotFoundException(String.format(ServiceErrorCodeMessage.NEWS_ID_DOES_NOT_EXIST.getCodeMsg(), newsId));

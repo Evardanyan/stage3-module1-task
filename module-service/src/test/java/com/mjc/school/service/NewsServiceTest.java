@@ -64,7 +64,7 @@ public class NewsServiceTest {
 
         assertNotNull(newsService.update(newsUpdateData));
         newsService.update(newsUpdateData);
-        NewsModel updatedNewsModel = newsRepository.findById(id);
+        NewsModel updatedNewsModel = newsRepository.readById(id);
 
         assertEquals(title, updatedNewsModel.getTitle());
         assertEquals(content, updatedNewsModel.getContent());
@@ -78,7 +78,7 @@ public class NewsServiceTest {
         @BeforeEach
         public void init() throws NotFoundException {
             logger.info("Prepare Data for testing");
-            readAll = repositoryFactory.getNewsRepository().findAll();
+            readAll = repositoryFactory.getNewsRepository().readAll();
         }
 
 
@@ -111,7 +111,7 @@ public class NewsServiceTest {
             Long newsId = 1L;
 
             assertTrue(newsService.deleteById(newsId));
-            assertNull(newsRepository.findById(newsId));
+            assertNull(newsRepository.readById(newsId));
         }
 
         @AfterEach

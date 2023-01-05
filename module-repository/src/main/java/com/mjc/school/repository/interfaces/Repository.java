@@ -3,9 +3,9 @@ package com.mjc.school.repository.interfaces;
 import java.util.List;
 
 public interface Repository<T> {
-    List<T> findAll();
+    List<T> readAll();
 
-    T findById(Long id);
+    T readById(Long id);
 
     T create(T id);
 

@@ -17,12 +17,12 @@ public class NewsRepository implements Repository<NewsModel> {
     }
 
     @Override
-    public List<NewsModel> findAll() {
+    public List<NewsModel> readAll() {
         return this.dataSource.getNews();
     }
 
     @Override
-    public NewsModel findById(Long newsId) {
+    public NewsModel readById(Long newsId) {
         return this.dataSource.getNews().stream().filter(news -> newsId.equals(news.getId())).findFirst().get();
     }
 
@@ -42,7 +42,7 @@ public class NewsRepository implements Repository<NewsModel> {
 
     @Override
     public NewsModel update(NewsModel model) {
-        NewsModel newsModel = this.findById(model.getId());
+        NewsModel newsModel = this.readById(model.getId());
         newsModel.setTitle(model.getTitle());
         newsModel.setContent(model.getContent());
         newsModel.setLastUpdatedDate(model.getLastUpdatedDate());
@@ -53,7 +53,7 @@ public class NewsRepository implements Repository<NewsModel> {
     @Override
     public Boolean deleteById(Long newsId) {
         final List<NewsModel> deleteList = new ArrayList<>();
-        deleteList.add(this.findById(newsId));
+        deleteList.add(this.readById(newsId));
         return this.dataSource.getNews().removeAll(deleteList);
     }
 
