@@ -1,6 +1,6 @@
 package com.mjc.school.clihelper;
 
-import com.mjc.school.controller.NewsController;
+import com.mjc.school.controller.impl.NewsController;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.exception.ServiceErrorCodeMessage;
 import com.mjc.school.service.exception.ValidatorException;
@@ -17,13 +17,13 @@ public class CliMenuHelper {
 
     public void getNews(NewsController newsController) {
         System.out.println(Operations.GET_ALL_NEWS.getOperation());
-        newsController.findAll().forEach(System.out::println);
+        newsController.readAll().forEach(System.out::println);
     }
 
     public void getNewsById(NewsController newsController, Scanner keyboard) {
         System.out.println(Operations.GET_NEWS_BY_ID.getOperation());
         System.out.println("Enter news id:");
-        System.out.println((Object)newsController.findById(Long.valueOf(this.getKeyboardNumber("News Id", keyboard))));
+        System.out.println((Object)newsController.readById(Long.valueOf(this.getKeyboardNumber("News Id", keyboard))));
     }
 
     public void createNews(NewsController newsController, Scanner keyboard) {

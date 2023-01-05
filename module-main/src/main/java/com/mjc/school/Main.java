@@ -1,7 +1,7 @@
 package com.mjc.school;
 
 import com.mjc.school.clihelper.CliMenuHelper;
-import com.mjc.school.controller.NewsController;
+import com.mjc.school.controller.impl.NewsController;
 
 import java.util.Scanner;
 

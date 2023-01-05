@@ -1,4 +1,4 @@
-package com.mjc.school.controller;
+package com.mjc.school.controller.impl;
 
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
@@ -11,11 +11,11 @@ public class NewsController {
 
     private final Service<NewsDtoRequest, NewsDtoResponse> newsService = ServiceFactory.getInstance().getNewsService();
 
-    public List<NewsDtoResponse> findAll() {
+    public List<NewsDtoResponse> readAll() {
         return this.newsService.readAll();
     }
 
-    public NewsDtoResponse findById(Long newsId) {
+    public NewsDtoResponse readById(Long newsId) {
         return (NewsDtoResponse)this.newsService.readById(newsId);
     }
 
