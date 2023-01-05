@@ -13,6 +13,7 @@ subprojects {
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 
+
     repositories {
         mavenCentral()
     }
@@ -24,6 +25,13 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    task makeSrcDirs {
+        sourceSets.main.java.srcDirs*.mkdirs()
+        sourceSets.main.resources.srcDirs*.mkdirs()
+        sourceSets.test.java.srcDirs*.mkdirs()
+        sourceSets.test.resources.srcDirs*.mkdirs()
     }
 }
 
