@@ -4,12 +4,13 @@ import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.factroy.ServiceFactory;
 import com.mjc.school.service.impl.NewsService;
+import com.mjc.school.service.interfaces.Service;
 
 import java.util.List;
 
 public class NewsController {
 
-    private final NewsService newsService = ServiceFactory.getInstance().getNewsService();
+    private final Service<NewsDtoRequest, NewsDtoResponse> newsService = ServiceFactory.getInstance().getNewsService();
 
     public List<NewsDtoResponse> readAll() {
         return newsService.readAll();
