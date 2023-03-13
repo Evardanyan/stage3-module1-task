@@ -25,7 +25,8 @@ public enum Operations {
         return operation;
     }
 
-    public String getOperationWithNumber () {
+    public String getOperationWithNumber() {
         return this.operationNum + " - " + this.operation;
     }
 }
+

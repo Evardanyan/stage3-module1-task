@@ -4,7 +4,8 @@ import com.mjc.school.repository.interfaces.Repository;
 import com.mjc.school.repository.model.data.NewsModel;
 import com.mjc.school.repository.utils.DataSource;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 public class NewsRepository implements Repository<NewsModel> {
 
@@ -25,7 +26,7 @@ public class NewsRepository implements Repository<NewsModel> {
         return this.dataSource.getNews().stream()
                 .filter(news -> Objects.equals(newsId, news.getId()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("News with ID " + newsId + " not found"));
+                .orElse(null);
     }
 
 
@@ -40,28 +41,20 @@ public class NewsRepository implements Repository<NewsModel> {
     }
 
 
-
     @Override
     public NewsModel update(NewsModel model) {
-        List<NewsModel> newsList = this.dataSource.getNews();
-        Optional<NewsModel> newsModelOptional = newsList.stream().filter(news -> news.getId().equals(model.getId())).findFirst();
-
-        if (newsModelOptional.isPresent()) {
-            NewsModel newsModel = newsModelOptional.get();
-            newsModel.setTitle(model.getTitle());
-            newsModel.setContent(model.getContent());
-            newsModel.setLastUpdatedDate(model.getLastUpdatedDate());
-            newsModel.setAuthorId(model.getAuthorId());
-            return newsModel;
-        } else {
-            throw new IllegalArgumentException("NewsModel with id " + model.getId() + " does not exist.");
-        }
+        NewsModel newsModel = readById(model.getId());
+        newsModel.setTitle(model.getTitle());
+        newsModel.setContent(model.getContent());
+        newsModel.setLastUpdatedDate(model.getLastUpdatedDate());
+        newsModel.setAuthorId(model.getAuthorId());
+        return newsModel;
     }
 
 
     @Override
     public Boolean deleteById(Long newsId) {
-        List<NewsModel> newsList = this.dataSource.getNews();
+        List<NewsModel> newsList = dataSource.getNews();
         int originalSize = newsList.size();
         newsList.removeIf(news -> newsId.equals(news.getId()));
         return originalSize != newsList.size();
@@ -71,9 +64,7 @@ public class NewsRepository implements Repository<NewsModel> {
     @Override
     public Boolean isExistById(Long newsId) {
         return this.dataSource.getNews().stream()
-                .map(NewsModel::getId)
-                .findFirst()
-                .orElse(null) != null;
+                .anyMatch(news -> newsId.equals(news.getId()));
     }
 
 }

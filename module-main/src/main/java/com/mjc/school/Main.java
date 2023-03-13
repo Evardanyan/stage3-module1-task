@@ -3,51 +3,38 @@ package com.mjc.school;
 import com.mjc.school.clihelper.CliMenuHelper;
 import com.mjc.school.controller.impl.NewsController;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
+    private static final Map<String, Runnable> commands = Map.of(
+            "1", () -> new CliMenuHelper().getNews(new NewsController()),
+            "2", () -> new CliMenuHelper().getNewsById(new NewsController(), new Scanner(System.in)),
+            "3", () -> new CliMenuHelper().createNews(new NewsController(), new Scanner(System.in)),
+            "4", () -> new CliMenuHelper().updateNews(new NewsController(), new Scanner(System.in)),
+            "5", () -> new CliMenuHelper().deleteNews(new NewsController(), new Scanner(System.in)),
+            "0", () -> System.exit(0)
+    );
+
     public static void main(String[] args) {
         Scanner keyboardInput = new Scanner(System.in);
         CliMenuHelper helper = new CliMenuHelper();
-        NewsController newsController = new NewsController();
         while (true) {
             try {
-                while (true) {
-                    String key;
-                    helper.printMainMenu();
-                    switch (key = keyboardInput.nextLine()) {
-                        case "1" -> {
-                            helper.getNews(newsController);
-                            continue;
-                        }
-                        case "2" -> {
-                            helper.getNewsById(newsController, keyboardInput);
-                            continue;
-                        }
-                        case "3" -> {
-                            helper.createNews(newsController, keyboardInput);
-                            continue;
-                        }
-                        case "4" -> {
-                            helper.updateNews(newsController, keyboardInput);
-                            continue;
-                        }
-                        case "5" -> {
-                            helper.deleteNews(newsController, keyboardInput);
-                            continue;
-                        }
-                        case "0" -> {
-                            System.exit(0);
-                            continue;
-                        }
-                    }
+                helper.printMainMenu();
+                String key = keyboardInput.nextLine();
+                if (commands.containsKey(key)) {
+                    commands.get(key).run();
+                } else {
                     System.out.println("Command not found.");
                 }
-            }
-            catch (RuntimeException ex) {
+            } catch (RuntimeException ex) {
                 System.out.println(ex.getMessage());
-                continue;
             }
         }
     }
 }
+
+
+
+

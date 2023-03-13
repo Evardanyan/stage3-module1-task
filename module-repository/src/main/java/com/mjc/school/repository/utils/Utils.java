@@ -11,6 +11,9 @@ import java.util.Random;
 
 public class Utils {
 
+    private Utils() {
+    }
+
 
     public static String getRandomContentByFilePath(String fileName) {
         final Random random = new Random();
@@ -23,7 +26,6 @@ public class Utils {
             return "We have an issue reading the file";
         }
     }
-
 
 
     public static LocalDateTime getRandomDate() {

@@ -54,7 +54,7 @@ public class NewsServiceTest {
 
     @DisplayName("JUnit test for update method")
     @Test
-    public void shouldUpdateNewsModelSuccessFully() throws NotFoundException,IllegalArgumentException {
+    public void shouldUpdateNewsModelSuccessFully() throws NotFoundException, IllegalArgumentException {
         Long id = 20L;
         Long authorId = 19L;
         String title = "Testing Update Method";

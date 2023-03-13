@@ -1,4 +1,5 @@
 package com.mjc.school.repository.model.data;
+
 import java.util.Objects;
 
 public class AuthorModel {

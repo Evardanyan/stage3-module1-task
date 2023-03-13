@@ -5,21 +5,18 @@ import com.mjc.school.repository.interfaces.Repository;
 import com.mjc.school.repository.model.data.NewsModel;
 
 public class RepositoryFactory {
-    private static RepositoryFactory instance;
-    private final Repository<NewsModel> newsRepository;
+    private static final RepositoryFactory INSTANCE = new RepositoryFactory();
+    private final Repository<NewsModel> newsRepository = new NewsRepository();
 
     private RepositoryFactory() {
-        this.newsRepository = new NewsRepository();
     }
 
     public static RepositoryFactory getInstance() {
-        if (RepositoryFactory.instance == null) {
-            RepositoryFactory.instance = new RepositoryFactory();
-        }
-        return RepositoryFactory.instance;
+        return INSTANCE;
     }
 
     public Repository<NewsModel> getNewsRepository() {
-        return this.newsRepository;
+        return newsRepository;
     }
 }
+

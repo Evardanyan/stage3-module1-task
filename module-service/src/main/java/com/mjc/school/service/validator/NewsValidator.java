@@ -1,43 +1,44 @@
 package com.mjc.school.service.validator;
 
+import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.exception.ServiceErrorCodeMessage;
 import com.mjc.school.service.exception.ValidatorException;
-import com.mjc.school.service.dto.NewsDtoRequest;
 
 public class NewsValidator {
-    private static NewsValidator newsValidator;
+
+    private static final NewsValidator instance = new NewsValidator();
     private static final String NEWS_ID = "News id";
     private static final String NEWS_CONTENT = "News content";
     private static final String AUTHOR_ID = "Author id";
     private static final String NEWS_TITLE = "News title";
-    private static final Integer NEWS_CONTENT_MIN_LENGTH;
-    private static final Integer NEWS_CONTENT_MAX_LENGTH;
-    private static final Integer NEWS_TITLE_MIN_LENGTH;
-    private static final Integer NEWS_TITLE_MAX_LENGTH;
-    private static final Integer MAX_AUTHOR_ID;
+    private static final int NEWS_CONTENT_MIN_LENGTH = 5;
+    private static final int NEWS_CONTENT_MAX_LENGTH = 255;
+    private static final int NEWS_TITLE_MIN_LENGTH = 5;
+    private static final int NEWS_TITLE_MAX_LENGTH = 30;
+    private static final int MAX_AUTHOR_ID = 20;
 
-    public static NewsValidator getNewsValidator() {
-        if (newsValidator == null) {
-            newsValidator = new NewsValidator();
-        }
-        return newsValidator;
+    private NewsValidator() {
+    }
+
+    public static NewsValidator getInstance() {
+        return instance;
     }
 
     public void validateNewsId(Long newsId) {
-        this.validateNumber(newsId, NEWS_ID);
+        validateNumber(newsId, NEWS_ID);
     }
 
     public void validateAuthorId(Long authorId) {
-        this.validateNumber(authorId, AUTHOR_ID);
-        if (authorId > (long)MAX_AUTHOR_ID.intValue()) {
+        validateNumber(authorId, AUTHOR_ID);
+        if (authorId > MAX_AUTHOR_ID) {
             throw new ValidatorException(String.format(ServiceErrorCodeMessage.AUTHOR_ID_DOES_NOT_EXIST.getCodeMsg(), authorId));
         }
     }
 
     public void validateNewsDto(NewsDtoRequest dtoRequest) {
-        this.validateString(dtoRequest.title(), NEWS_TITLE, NEWS_TITLE_MIN_LENGTH, NEWS_TITLE_MAX_LENGTH);
-        this.validateString(dtoRequest.content(), NEWS_CONTENT, NEWS_CONTENT_MIN_LENGTH, NEWS_CONTENT_MAX_LENGTH);
-        this.validateAuthorId(dtoRequest.authorId());
+        validateString(dtoRequest.title(), NEWS_TITLE, NEWS_TITLE_MIN_LENGTH, NEWS_TITLE_MAX_LENGTH);
+        validateString(dtoRequest.content(), NEWS_CONTENT, NEWS_CONTENT_MIN_LENGTH, NEWS_CONTENT_MAX_LENGTH);
+        validateAuthorId(dtoRequest.authorId());
     }
 
     private void validateNumber(Long id, String parameter) {
@@ -50,16 +51,10 @@ public class NewsValidator {
         if (value == null) {
             throw new ValidatorException(String.format(ServiceErrorCodeMessage.VALIDATE_NULL_STRING.getCodeMsg(), parameter, parameter));
         }
-        if (value.trim().length() < minLength || value.trim().length() > maxLength) {
+        int length = value.trim().length();
+        if (length < minLength || length > maxLength) {
             throw new ValidatorException(String.format(ServiceErrorCodeMessage.VALIDATE_STRING_LENGTH.getCodeMsg(), parameter, minLength, maxLength, parameter, value));
         }
     }
-
-    static {
-        NEWS_CONTENT_MIN_LENGTH = 5;
-        NEWS_CONTENT_MAX_LENGTH = 255;
-        NEWS_TITLE_MIN_LENGTH = 5;
-        NEWS_TITLE_MAX_LENGTH = 30;
-        MAX_AUTHOR_ID = 20;
-    }
 }
+
