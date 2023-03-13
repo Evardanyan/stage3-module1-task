@@ -1,12 +1,13 @@
 package com.mjc.school.repository.model.data;
+
 import java.util.Objects;
 
 public class AuthorModel {
 
     private Long id;
-    private final String name;
+    private String name;
 
-    public AuthorModel(Long id, String name) {
+    public AuthorModel(final Long id, final String name) {
         this.id = id;
         this.name = name;
     }
@@ -23,12 +24,16 @@ public class AuthorModel {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AuthorModel)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AuthorModel that = (AuthorModel) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+        return id.equals(that.id) && name.equals(that.name);
     }
 
     @Override
@@ -44,4 +49,3 @@ public class AuthorModel {
                 '}';
     }
 }
-

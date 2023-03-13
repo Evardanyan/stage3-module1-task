@@ -54,7 +54,7 @@ public class NewsServiceTest {
 
     @DisplayName("JUnit test for update method")
     @Test
-    public void shouldUpdateNewsModelSuccessFully() throws NotFoundException {
+    public void shouldUpdateNewsModelSuccessFully() throws NotFoundException,IllegalArgumentException {
         Long id = 20L;
         Long authorId = 19L;
         String title = "Testing Update Method";
@@ -107,7 +107,7 @@ public class NewsServiceTest {
 
         @DisplayName("JUnit test for deleteById method")
         @Test
-        public void shouldBeDelete() throws NotFoundException {
+        public void shouldBeDelete() throws NotFoundException, IllegalArgumentException {
             Long newsId = 1L;
 
             assertTrue(newsService.deleteById(newsId));

@@ -8,29 +8,31 @@ import java.util.List;
 public class AuthorData {
 
     private static final String AUTHORS_FILE_NAME = "authors";
-    private static AuthorData authorData;
-    private List<AuthorModel> authorList;
+    private static final int NUM_AUTHORS = 20;
+
+    private static final AuthorData INSTANCE = new AuthorData();
+
+    private final List<AuthorModel> authorList;
 
     private AuthorData() {
-        this.init();
+        this.authorList = initAuthorList();
     }
 
-    public static AuthorData getAuthorData() {
-        if (AuthorData.authorData == null) {
-            AuthorData.authorData = new AuthorData();
+    public static AuthorData getInstance() {
+        return INSTANCE;
+    }
+
+    private List<AuthorModel> initAuthorList() {
+        List<AuthorModel> authorList = new ArrayList<>(NUM_AUTHORS);
+        for (long i = 1L; i <= NUM_AUTHORS; ++i) {
+            authorList.add(new AuthorModel(i, Utils.getRandomContentByFilePath(AUTHORS_FILE_NAME)));
         }
-        return AuthorData.authorData;
+        return authorList;
     }
 
-    private void init() {
-        this.authorList = new ArrayList<AuthorModel>();
-        for (long i = 1L; i <= 20L; ++i) {
-            this.authorList.add(new AuthorModel(i, Utils.getRandomContentByFilePath("authors")));
-        }
-    }
-
-    public List<AuthorModel> getAuthorList() {
-        return this.authorList;
+    public List<AuthorModel> getAuthors() {
+        return authorList;
     }
 
 }
+
